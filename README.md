@@ -4,7 +4,7 @@
 A clean, responsive personal finance web app with a glassmorphism dark UI — built as part of a 10-day web development workshop.
 
 ## 🔗 Live Demo
-[View Live →] (https://suneerkhan.github.io/Budget-Tracker/)
+[View Live →](https://suneerkhan.github.io/Budget-Tracker/)
 
 ---
 
