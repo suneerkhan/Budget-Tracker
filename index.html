@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toast-msg">Transaction added!</span>
+  </div>
+
+  <!-- Balance Card -->
+  <div class="balance-card">
+    <div class="card-top">
+      <div>
+        <div class="balance-label">Total Balance</div>
+        <div class="balance-amount" id="balance">₹0.00</div>
+      </div>
+      <div class="currency-switcher">
+        <button class="cur-btn active" data-cur="₹" onclick="setCurrency('₹',this)">₹</button>
+        <button class="cur-btn" data-cur="$" onclick="setCurrency('$',this)">$</button>
+        <button class="cur-btn" data-cur="€" onclick="setCurrency('€',this)">€</button>
+      </div>
+    </div>
+    <div class="balance-row">
+      <div class="balance-stat">
+        <div class="stat-label">↓ Income</div>
+        <div class="stat-amount income-amt" id="total-income">₹0.00</div>
+      </div>
+      <div class="balance-stat">
+        <div class="stat-label">↑ Expenses</div>
+        <div class="stat-amount expense-amt" id="total-expense">₹0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Grid -->
+  <div class="section-grid">
+    <div class="form-card">
+      <h3><span class="dot income-dot"></span> Add Income</h3>
+      <input type="text" id="income-desc" placeholder="Description (e.g. Salary)" />
+      <input type="number" id="income-amount" placeholder="Amount" min="0" step="0.01" />
+      <select id="income-category">
+        <option value="Salary">💼 Salary</option>
+        <option value="Freelance">💻 Freelance</option>
+        <option value="Investment">📈 Investment</option>
+        <option value="Gift">🎁 Gift</option>
+        <option value="Other">📦 Other</option>
+      </select>
+      <button class="add-btn income-btn" onclick="addTransaction('income')">+ Add Income</button>
+    </div>
+    <div class="form-card">
+      <h3><span class="dot expense-dot"></span> Add Expense</h3>
+      <input type="text" id="expense-desc" placeholder="Description (e.g. Food)" />
+      <input type="number" id="expense-amount" placeholder="Amount" min="0" step="0.01" />
+      <select id="expense-category">
+        <option value="Food">🍔 Food</option>
+        <option value="Transport">🚗 Transport</option>
+        <option value="Shopping">🛍️ Shopping</option>
+        <option value="Bills">💡 Bills</option>
+        <option value="Health">🏥 Health</option>
+        <option value="Other">📦 Other</option>
+      </select>
+      <button class="add-btn expense-btn" onclick="addTransaction('expense')">+ Add Expense</button>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <h2>Monthly Overview</h2>
+      <span class="chart-sub" id="chart-month-label"></span>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="monthChart"></canvas>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="history-card">
+    <div class="history-header">
+      <h2>Transaction History</h2>
+      <button class="clear-btn" onclick="clearAll()">Clear all</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <input type="text" id="search-input" placeholder="🔍  Search transactions..." oninput="render()" />
+      <div class="filter-tabs">
+        <button class="ftab active" onclick="setFilter('all', this)">All</button>
+        <button class="ftab" onclick="setFilter('week', this)">This week</button>
+        <button class="ftab" onclick="setFilter('month', this)">This month</button>
+      </div>
+    </div>
+
+    <div class="tx-list" id="tx-list">
+      <div class="empty-state">
+        <span class="empty-icon">💳</span>
+        No transactions yet. Add one above!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Edit Transaction</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <input type="text" id="edit-desc" placeholder="Description" />
+    <input type="number" id="edit-amount" placeholder="Amount" min="0" step="0.01" />
+    <input type="hidden" id="edit-id" />
+    <button class="add-btn income-btn" style="margin-top:10px" onclick="saveEdit()">Save Changes</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
