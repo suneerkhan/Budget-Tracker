@@ -27,7 +27,7 @@ A clean, responsive personal finance web app with a glassmorphism dark UI — bu
 
 - HTML5
 - CSS3 (Glassmorphism, Flexbox, Grid)
-- JavaScript (Vanilla)
+- JavaScript 
 - Chart.js
 
 ---
